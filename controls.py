@@ -15,6 +15,7 @@ def update_table(data):
         rows=[
             ft.DataRow(cells=[ft.DataCell(ft.Text(str(cell))) for cell in row]) for row in data.values.tolist()
         ],
+        width=730,
     )
     return table
 

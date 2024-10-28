@@ -5,9 +5,6 @@ import controls
 def main(page: ft.Page):
     def pick_files_result(e: ft.FilePickerResultEvent):
         global search_bar, dd, data_table, data
-        # selected_files.value = (
-        #     ", ".join(map(lambda f: f.name, e.files)) if e.files else "Cancelled!"
-        # )
         selected_files.value = e.files[0].name if e.files else 'Cancelled!'
         selected_files.update()
         data = controls.read_table(e.files[0].path)
@@ -18,14 +15,14 @@ def main(page: ft.Page):
             ],
             value=data.columns[0],
         )
-        search_bar = ft.TextField(label="Search")
+        search_bar = ft.TextField(label="Search", on_change=handle_search, width=650)
         data_table = controls.update_table(data)
         page.add(
             ft.Row(
                 [
                     dd,
                     search_bar,
-                    ft.ElevatedButton("Search", on_click=handle_search)
+                    # ft.ElevatedButton("Search", on_click=handle_search)
                 ]
             ),
             data_table
@@ -47,8 +44,9 @@ def main(page: ft.Page):
     pick_files_dialog = ft.FilePicker(on_result=pick_files_result)
     selected_files = ft.Text()
 
+    page.title = 'Searching'
     page.overlay.append(pick_files_dialog)
-
+    page.scroll = True
     page.add(
         ft.Row(
             [
@@ -65,4 +63,4 @@ def main(page: ft.Page):
     )
 
 
-ft.app(target=main)
+ft.app(target=main, assets_dir='assets')
