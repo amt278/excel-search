@@ -24,7 +24,7 @@ def filter_table(data: pd.DataFrame, key, query):
     if data[key].dtype == 'int64':
         data = data[data[key] == int(query)]
     else:
-        data = data[data[key].str.contains(query)]
+        data = data[data[key].str.contains(query, case=False)]
     print(f'filtered data: {data}')
     table = update_table(data)
     return table
